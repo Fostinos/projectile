@@ -1,0 +1,54 @@
+{
+    "titre" : "Projectile Motion",
+    "gravite" : 9.8,
+    "projectiles": [
+        {
+            "alpha": 45,
+            "vitesse_0": 26,
+            "z_0": 1.2,
+            "couleur" : "red",
+            "label" : "vitesse_0 : 26 & alpha : 45",
+            "frottement": "LINEAIRE",
+            "surface": 0.035,
+            "masse": 5.0,
+            "rho": 1.184,
+            "Cd": 0.11
+        },
+        {
+            "alpha": 30,
+            "vitesse_0": 26,
+            "z_0": 1.2,
+            "couleur" : "green",
+            "label" : "vitesse_0 : 26 & alpha : 30",
+            "frottement": "LINEAIRE",
+            "surface": 0.035,
+            "masse": 5.0,
+            "rho": 1.184,
+            "Cd": 0.11
+        },
+        {
+            "alpha": 55,
+            "vitesse_0": 26,
+            "z_0": 1.2,
+            "couleur" : "purple",
+            "label" : "vitesse_0 : 26 & alpha : 55",
+            "frottement": "LINEAIRE",
+            "surface": 0.035,
+            "masse": 5.0,
+            "rho": 1.184,
+            "Cd": 0.11
+        },
+        {
+            "alpha": 45,
+            "vitesse_0": 52,
+            "z_0": 1.2,
+            "couleur" : "red",
+            "label" : "vitesse_0 : 52 & alpha : 45",
+            "frottement": "QUADRATIQUE",
+            "surface": 0.035,
+            "masse": 5.0,
+            "rho": 1.184,
+            "Cd": 0.11
+        }
+    ]
+}
