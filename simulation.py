@@ -53,9 +53,9 @@ def get_initial_conditions(projectile: dict)->list:
     x0 = 0.0
     z0 = h
     # Vitesse initiale suivant l'axe X
-    u0 = speed * math.sin(alpha)
+    u0 = speed * math.cos(alpha)
     # Vitesse initiale suivant l'axe Z
-    v0 = speed * math.cos(alpha)
+    v0 = speed * math.sin(alpha)
     sys = [x0, z0, u0, v0]
     return sys
 
