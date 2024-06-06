@@ -24,10 +24,7 @@
             "z_0": 1.2,
             "couleur": "purple",
             "label": "vitesse_0 : 52 & alpha : 55",
-            "frottement": "SANS",
-            "surface": 0.035,
-            "rho": 1.184,
-            "Cd": 0.11
+            "frottement": "SANS"
         },
         {
             "alpha": 55,
@@ -39,7 +36,8 @@
             "surface": 0.035,
             "masse": 5.0,
             "rho": 1.184,
-            "Cd": 0.11
+            "Cd": 0.11,
+            "Cp": 0.06
         },
         {
             "alpha": 55,

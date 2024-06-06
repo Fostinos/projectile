@@ -10,7 +10,10 @@ MAX_POINTS = 100000
 CONSTANTES = {
     "g": 0.0,    # gravité
     "A": 0.0,    # constante A
-    "B": 0.0     # constante B
+    "B": 0.0,    # constante B
+    "Q": None    # Q = None => sans frottement
+                 # Q = False => frottement lineaire
+                 # Q = True => frottement quadratique
 }
 
 def read_configuration()->dict:
@@ -31,21 +34,21 @@ def get_initial_conditions(projectile: dict)->list:
     CONSTANTES["A"] = 0.0
     CONSTANTES["B"] = 0.0
     frottement = projectile.get("frottement", "SANS")
+    surface:float = projectile.get("surface", 0.01)
+    mass:float = projectile.get("masse", 1.0)
+    rho:float = projectile.get("rho", 0.1)
+    Cd:float = projectile.get("Cd", 0.1)
+    Cp:float = projectile.get("Cp", 0.1)
     if frottement == "LINEAIRE":
-        surface:float = projectile.get("surface", 0.01)
-        mass:float = projectile.get("masse", 1.0)
-        rho:float = projectile.get("rho", 0.1)
-        Cd:float = projectile.get("Cd", 0.1)
-        CONSTANTES["A"] = (rho * surface * (Cd*math.cos(alpha)))/(2 * mass)
-        CONSTANTES["B"] = (rho * surface * (Cd*math.cos(alpha)))/(2 * mass)
-    elif frottement == "QUADRATIQUE":
-        surface:float = projectile.get("surface", 0.01)
-        mass:float = projectile.get("masse", 1.0)
-        rho:float = projectile.get("rho", 0.1)
-        Cd:float = projectile.get("Cd", 0.1)
-        Cp:float = projectile.get("Cp", 0.1)
+        CONSTANTES["Q"] = False # sans frottement
         CONSTANTES["A"] = (rho * surface * (Cd*math.cos(alpha) - Cp*math.sin(alpha)))/(2 * mass)
         CONSTANTES["B"] = (rho * surface * (Cd*math.cos(alpha) + Cp*math.sin(alpha)))/(2 * mass)
+    elif frottement == "QUADRATIQUE":
+        CONSTANTES["Q"] = True # sans frottement
+        CONSTANTES["A"] = (rho * surface * (Cd*math.cos(alpha) - Cp*math.sin(alpha)))/(2 * mass)
+        CONSTANTES["B"] = (rho * surface * (Cd*math.cos(alpha) + Cp*math.sin(alpha)))/(2 * mass)
+    else:
+        CONSTANTES["Q"] = None # sans frottement
     # Conditions initiales
     x0 = 0.0
     z0 = h
@@ -86,9 +89,16 @@ def system(t, sys):
             v : la vitesse instatannée suivant l'axe Z
     """
     x, z, u, v = sys
-    A, B, G = CONSTANTES["A"], CONSTANTES["B"], CONSTANTES["g"]
-    du_dt = -A * (u**2 + v**2)
-    dv_dt = -B * (v**2 + u**2) - G
+    A, B, G, Q = CONSTANTES["A"], CONSTANTES["B"], CONSTANTES["g"], CONSTANTES["Q"]
+    if Q is None: # sans frottement
+        du_dt = 0
+        dv_dt = -G
+    elif Q is False: # frottement lineaire
+        du_dt = -A * (u + v)
+        dv_dt = -B * (u + v) - G
+    elif Q is True: # frottement quadratique
+        du_dt = -A * (u**2 + v**2)
+        dv_dt = -B * (u**2 + v**2) - G
     dx_dt = u
     dz_dt = v
     return [dx_dt, dz_dt, du_dt, dv_dt]
