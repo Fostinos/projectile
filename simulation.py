@@ -41,12 +41,12 @@ def get_initial_conditions(projectile: dict)->list:
     Cp:float = projectile.get("Cp", 0.1)
     if frottement == "LINEAIRE":
         CONSTANTES["Q"] = False # frottement lineaire
-        CONSTANTES["A"] = (rho * surface * (Cd*math.cos(alpha) - Cp*math.sin(alpha)))/(2 * mass)
-        CONSTANTES["B"] = (rho * surface * (Cd*math.cos(alpha) + Cp*math.sin(alpha)))/(2 * mass)
+        CONSTANTES["A"] = (rho * surface * (Cd*math.cos(alpha)))/(2 * mass)
+        CONSTANTES["B"] = (rho * surface * (Cd*math.sin(alpha)))/(2 * mass)
     elif frottement == "QUADRATIQUE":
         CONSTANTES["Q"] = True # frottement quadratique
         CONSTANTES["A"] = (rho * surface * (Cd*math.cos(alpha) - Cp*math.sin(alpha)))/(2 * mass)
-        CONSTANTES["B"] = (rho * surface * (Cd*math.cos(alpha) + Cp*math.sin(alpha)))/(2 * mass)
+        CONSTANTES["B"] = (rho * surface * (Cd*math.sin(alpha) + Cp*math.cos(alpha)))/(2 * mass)
     else:
         CONSTANTES["Q"] = None # sans frottement
     # Conditions initiales
